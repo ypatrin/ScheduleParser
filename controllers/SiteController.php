@@ -20,7 +20,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $schedule = false; //Yii::$app->cache->get("schedule");
+        $schedule = Yii::$app->cache->get("schedule");
 
         if ($schedule === false) {
             $kbpSchedule = (new components\KbpParser())->getSchedule();
@@ -31,7 +31,7 @@ class SiteController extends Controller
                 return strtotime($a->schedule_time) - strtotime($b->schedule_time);
             });
 
-            //Yii::$app->cache->set("schedule", $schedule, 60 * 60);
+            Yii::$app->cache->set("schedule", $schedule, 60 * 5);
         }
         return $this->render('index', ['schedule' => $schedule]);
     }
