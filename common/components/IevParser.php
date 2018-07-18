@@ -50,7 +50,8 @@ class IevParser implements ScheduleParser
 
             if ($flightObject->status == FlightObject::SCHEDULE_STATUS_DP) {
                 $flightObject->schedule_time = date('Y-m-d H:i', strtotime($flight->timeDepShedule) + 60*60*3);
-                $flightObject->real_time = date('Y-m-d H:i', strtotime($flight->timeTakeofFact) + 60*60*3);
+                if (isset($flight->timeTakeofFact))
+                    $flightObject->real_time = date('Y-m-d H:i', strtotime($flight->timeTakeofFact) + 60*60*3);
             } else {
                 $flightObject->schedule_time = date('Y-m-d H:i', strtotime($flight->timeDepShedule) + 60*60*3);
             }
@@ -85,7 +86,8 @@ class IevParser implements ScheduleParser
 
             if ($flightObject->status == FlightObject::SCHEDULE_STATUS_LN) {
                 $flightObject->schedule_time = date('Y-m-d H:i', strtotime($flight->timeToStand) + 60*60*3);
-                $flightObject->real_time = date('Y-m-d H:i', strtotime($flight->timeLandFact) + 60*60*3);
+                if (isset($flight->timeLandFact))
+                    $flightObject->real_time = date('Y-m-d H:i', strtotime($flight->timeLandFact) + 60*60*3);
             }
             else {
                 $flightObject->schedule_time = date('Y-m-d H:i', strtotime($flight->timeToStand) + 60*60*3);
