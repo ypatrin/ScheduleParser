@@ -18,6 +18,9 @@ class IevParser implements ScheduleParser
 
     public function getSchedule()
     {
+        $this->_loadSchedulePage(date('d-m-Y', strtotime('-1 day')));
+        $this->_parseSchedulePage();
+
         $this->_loadSchedulePage(date('d-m-Y'));
         $this->_parseSchedulePage();
 
@@ -39,10 +42,6 @@ class IevParser implements ScheduleParser
 
         foreach ($results->body->departure as $flight)
         {
-            if ($flight->fltNo == "1723") {
-                //var_dump($flight); exit;
-            }
-
             $flightObject = new FlightObject();
             $flightObject->flightNumber = (isset($flight->{"carrierID.IATA"}) ? $flight->{"carrierID.IATA"} : $flight->{"carrierID.code"}) . ' ' . $flight->fltNo;
             $flightObject->airport = $flight->{"airportToID.city_ru"};
