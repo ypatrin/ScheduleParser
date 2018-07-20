@@ -39,6 +39,7 @@ if (isset($_GET['source']))
                 <option value="all" <?php if ($source == "all"): ?>selected<?php endif ?>>Все</option>
                 <option value="kbp" <?php if ($source == "kbp"): ?>selected<?php endif ?>>KBP</option>
                 <option value="iev" <?php if ($source == "iev"): ?>selected<?php endif ?>>IEV</option>
+                <option value="lwo" <?php if ($source == "lwo"): ?>selected<?php endif ?>>LWO</option>
             </select>
         </div>
         <div class="form-group">

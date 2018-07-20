@@ -23,15 +23,16 @@ class SiteController extends Controller
         $schedule = Yii::$app->cache->get("schedule");
 
         if ($schedule === false) {
+            $lwoSchedule = (new components\LwoParser())->getSchedule();
             $kbpSchedule = (new components\KbpParser())->getSchedule();
             $ievSchedule = (new components\IevParser())->getSchedule();
 
-            $schedule = array_merge($kbpSchedule, $ievSchedule);
+            $schedule = array_merge($kbpSchedule, $ievSchedule, $lwoSchedule);
             usort($schedule, function ($a, $b) {
                 return strtotime($a->schedule_time) - strtotime($b->schedule_time);
             });
 
-            Yii::$app->cache->set("schedule", $schedule, 60 * 5);
+            Yii::$app->cache->set("schedule", $schedule, 60 * 10);
         }
         return $this->render('index', ['schedule' => $schedule]);
     }

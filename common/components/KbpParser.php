@@ -96,7 +96,7 @@ class KbpParser implements ScheduleParser
             case "EXPECTED": return FlightObject::SCHEDULE_STATUS_DL; break;
             case "BOARDINGSTOP": return FlightObject::SCHEDULE_STATUS_BD; break;
             case "SCHEDULED": return FlightObject::SCHEDULE_STATUS_ON; break;
-            case "BOARDING": return FlightObject::SCHEDULE_STATUS_BO; break;
+            case "BOARDING": return FlightObject::SCHEDULE_STATUS_СС; break;
             case "CHECKIN": return FlightObject::SCHEDULE_STATUS_CK; break;
 
             case "ARRIVED": return FlightObject::SCHEDULE_STATUS_LN; break;

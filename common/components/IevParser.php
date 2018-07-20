@@ -142,6 +142,7 @@ class IevParser implements ScheduleParser
             case "CX": return FlightObject::SCHEDULE_STATUS_CX; break;
             case "DP": return FlightObject::SCHEDULE_STATUS_DP; break;
             case "LN": return FlightObject::SCHEDULE_STATUS_LN; break;
+            case "CC": return FlightObject::SCHEDULE_STATUS_СС; break;
             case "BD": return FlightObject::SCHEDULE_STATUS_BD; break;
             case "GC": return FlightObject::SCHEDULE_STATUS_BD; break;
             case "CK": return FlightObject::SCHEDULE_STATUS_CK; break;

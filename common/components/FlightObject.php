@@ -20,8 +20,8 @@ class FlightObject
     // рейс уже прилетел
     const SCHEDULE_STATUS_LN = 'arrived';
 
-    // рейс уже прилетел
-    const SCHEDULE_STATUS_BO = 'boarding';
+    // посадка
+    const SCHEDULE_STATUS_СС = 'boarding';
 
     // посадка окончена
     const SCHEDULE_STATUS_BD = 'landing_over';
