@@ -27,7 +27,9 @@ class LwoParser implements ScheduleParser
     {
         $this->_schedule_page_content = @file_get_contents(self::SCHEDULE_PAGE_URL . microtime());
         // fix json
-        $this->_schedule_page_content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $this->_schedule_page_content);
+        if (0 === strpos(bin2hex($this->_schedule_page_content), 'efbbbf')) {
+            $this->_schedule_page_content = substr($this->_schedule_page_content, 3);
+        }
     }
 
     protected function _parseSchedulePage()
@@ -45,7 +47,7 @@ class LwoParser implements ScheduleParser
 
                 $flightObject = new FlightObject();
                 $flightObject->flightNumber = $flight['flight_num'];
-                $flightObject->airport = $flight['code_direction'];
+                $flightObject->airport = $flight['direction_city'];
                 $flightObject->status = $this->_getStatus($flight['status_class']);
 
                 $flightObject->carrier = $flight["name_airline"];
@@ -82,7 +84,7 @@ class LwoParser implements ScheduleParser
 
                 $flightObject = new FlightObject();
                 $flightObject->flightNumber = $flight['flight_num'];
-                $flightObject->airport = $flight['code_direction'];
+                $flightObject->airport = $flight['direction_city'];
                 $flightObject->status = $this->_getStatus($flight['status_class']);
 
                 $flightObject->carrier = $flight["name_airline"];
