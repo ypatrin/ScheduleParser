@@ -56,9 +56,16 @@ class OdsParser implements ScheduleParser
             $tdList = $tr[$i]->getElementsByTagName('td');
 
             $flightObject = new FlightObject();
-            $flightObject->flightNumber = $tdList[0]->nodeValue;
+
+            $fNumberArr = explode('/', $tdList[0]->nodeValue);
+            $fNumber = substr($fNumberArr[0], 0, 2).' '.substr($fNumberArr[0], 2, strlen($fNumberArr[0]));
+            if (!empty($fNumberArr[1])) {
+                $fNumber .= '/'. substr($fNumberArr[1], 0, 2).' '.substr($fNumberArr[1], 2, strlen($fNumberArr[1]));
+            }
+
+            $flightObject->flightNumber = $fNumber;
             $flightObject->airport = $tdList[1]->nodeValue;
-            $flightObject->status = $tdList[4]->nodeValue;
+            $flightObject->status = $this->_getStatus(strtoupper($tdList[4]->nodeValue));
             $flightObject->direction = $direction;
 
             if ($tdList[2]->getElementsByTagName('div')->length == 0)
@@ -89,5 +96,23 @@ class OdsParser implements ScheduleParser
 
         if (empty($this->_schedule_parse_result)) $this->_schedule_parse_result = $flights;
         else $this->_schedule_parse_result = array_merge($this->_schedule_parse_result, $flights);
+    }
+
+    protected function _getStatus($status)
+    {
+        $status = trim($status);
+        $status = mb_convert_encoding($status, 'UTF-8', mb_detect_encoding($status));
+
+        switch (strtoupper($status)) {
+            case "Вылетел": return FlightObject::SCHEDULE_STATUS_DP; break;
+            case "Прибыл": return FlightObject::SCHEDULE_STATUS_LN; break;
+            case "Регистрация завершена": return FlightObject::SCHEDULE_STATUS_CK_COMPLETE; break;
+            case "Летит": return FlightObject::SCHEDULE_STATUS_FR; break;
+            case "Идет регистрация": return FlightObject::SCHEDULE_STATUS_CK; break;
+            case "По расписанию": return FlightObject::SCHEDULE_STATUS_ON; break;
+            default: return strtoupper($status); break;
+        }
+
+        return strtoupper($status);
     }
 }

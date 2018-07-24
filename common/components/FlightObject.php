@@ -30,6 +30,9 @@ class FlightObject
     // регистрация на рейс
     const SCHEDULE_STATUS_CK = 'check-in';
 
+    // регистрация на рейс
+    const SCHEDULE_STATUS_CK_COMPLETE = 'check-in_complete';
+
     // запланировано
     const SCHEDULE_STATUS_ON = 'scheduled';
 
