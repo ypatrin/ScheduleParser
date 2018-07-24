@@ -37,9 +37,9 @@ if (isset($_GET['source']))
             <label>Источник расписания</label>
             <select name="source">
                 <option value="all" <?php if ($source == "all"): ?>selected<?php endif ?>>Все</option>
-                <option value="kbp" <?php if ($source == "kbp"): ?>selected<?php endif ?>>KBP</option>
-                <option value="iev" <?php if ($source == "iev"): ?>selected<?php endif ?>>IEV</option>
-                <option value="lwo" <?php if ($source == "lwo"): ?>selected<?php endif ?>>LWO</option>
+                <?php foreach ($parserList as $parser): ?>
+                    <option value="<?=strtolower($parser)?>" <?php if (strtolower($source) == strtolower($parser)): ?>selected<?php endif ?>><?=strtoupper($parser)?></option>
+                <?php endforeach ?>
             </select>
         </div>
         <div class="form-group">

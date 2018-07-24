@@ -9,7 +9,6 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\common\components;
 
 class SiteController extends Controller
 {
@@ -20,20 +19,36 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $schedule = Yii::$app->cache->get("schedule");
+        $parserList = [
+            'Kbp', 'Iev', 'Lwo', 'Ods'
+        ];
+
+        $schedule = false; //Yii::$app->cache->get("schedule");
 
         if ($schedule === false) {
-            $lwoSchedule = (new components\LwoParser())->getSchedule();
-            $kbpSchedule = (new components\KbpParser())->getSchedule();
-            $ievSchedule = (new components\IevParser())->getSchedule();
+            $schedule = [];
 
-            $schedule = array_merge($kbpSchedule, $ievSchedule, $lwoSchedule);
+            foreach ($parserList as $parser) {
+                $objectName =  "app\\common\\components\\{$parser}Parser";
+                $instance = new $objectName();
+                $results = $instance->getSchedule();
+
+                if (empty($schedule)) {
+                    $schedule = $results;
+                } else {
+                    $schedule = array_merge($schedule, $results);
+                }
+            }
+
             usort($schedule, function ($a, $b) {
                 return strtotime($a->schedule_time) - strtotime($b->schedule_time);
             });
 
             Yii::$app->cache->set("schedule", $schedule, 60 * 10);
         }
-        return $this->render('index', ['schedule' => $schedule]);
+        return $this->render('index', [
+            'schedule' => $schedule,
+            'parserList' => $parserList
+        ]);
     }
 }
