@@ -20,10 +20,10 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $parserList = [
-            'Kbp', 'Iev', 'Lwo', 'Ods'
+            'Hrk', 'Kbp', 'Iev', 'Lwo', 'Ods'
         ];
 
-        $schedule = Yii::$app->cache->get("schedule");
+        $schedule = false; //Yii::$app->cache->get("schedule");
 
         if ($schedule === false) {
             $schedule = [];
@@ -43,6 +43,8 @@ class SiteController extends Controller
             usort($schedule, function ($a, $b) {
                 return strtotime($a->schedule_time) - strtotime($b->schedule_time);
             });
+
+            //var_dump($schedule); exit;
 
             Yii::$app->cache->set("schedule", $schedule, 60 * 10);
         }
