@@ -41,11 +41,11 @@ class OdsParser implements ScheduleParser
         $classname = "iboardbodytab";
 
         $nodes = $finder->query("//div[@class='{$classname}']");
-        $departure = $nodes[0];
-        $arrival = $nodes[1];
+        $arrival = $nodes[0];
+        $departure = $nodes[1];
 
-        $this->_buildResults($departure, "departure");
         $this->_buildResults($arrival, "arrival");
+        $this->_buildResults($departure, "departure");
     }
 
     protected function _buildResults($results, $direction)
@@ -86,6 +86,10 @@ class OdsParser implements ScheduleParser
 
             if (!empty(trim($tdList[3]->nodeValue))) {
                 $flightObject->real_time = date('Y-m-d') . ' ' . $tdList[3]->nodeValue;
+                if ( date('dmYHi', strtotime($flightObject->schedule_time)) == date('dmYHi', strtotime($flightObject->real_time)) )
+                {
+                    $flightObject->real_time = false;
+                }
             }
 
             $flightObject->_source = 'ODS';
@@ -110,6 +114,7 @@ class OdsParser implements ScheduleParser
             case "Летит": return FlightObject::SCHEDULE_STATUS_FR; break;
             case "Идет регистрация": return FlightObject::SCHEDULE_STATUS_CK; break;
             case "По расписанию": return FlightObject::SCHEDULE_STATUS_ON; break;
+            case "Идет посадка": return FlightObject::SCHEDULE_STATUS_СС; break;
             default: return strtoupper($status); break;
         }
 
