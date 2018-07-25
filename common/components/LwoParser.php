@@ -68,7 +68,7 @@ class LwoParser implements ScheduleParser
                     $flightObject->rel_date = "tomorrow";
                 }
 
-                $flightObject->schedule_time = $date . $flight['time'];
+                $flightObject->schedule_time = $date . ' ' . $flight['time'];
 
                 if (!in_array($flightObject, $flights))
                     $flights[] = $flightObject;
@@ -105,7 +105,7 @@ class LwoParser implements ScheduleParser
                     $flightObject->rel_date = "tomorrow";
                 }
 
-                $flightObject->schedule_time = $date . $flight['time'];
+                $flightObject->schedule_time = $date . ' ' . $flight['time'];
 
                 if (!in_array($flightObject, $flights))
                     $flights[] = $flightObject;
