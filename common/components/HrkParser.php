@@ -53,9 +53,12 @@ class HrkParser implements ScheduleParser
             $td = $nodes[$i]->childNodes;
             $flightObject = new FlightObject();
 
-            $flightObject->flightNumber = $td[0]->nodeValue;
-            $flightObject->airport = $td[1]->nodeValue;
-            $flightObject->status = $td[3]->nodeValue;
+            if (isset($td[1]))
+                $flightObject->flightNumber = $td[1]->nodeValue;
+            if (isset($td[2]))
+                $flightObject->airport = $td[2]->nodeValue;
+            if (isset($td[4]))
+                $flightObject->status = $td[4]->nodeValue;
 
             $realTime = $td[3]->nodeValue;
             if ( $class == 'flight-today' ) {
@@ -102,9 +105,12 @@ class HrkParser implements ScheduleParser
             $td = $nodes[$i]->childNodes;
             $flightObject = new FlightObject();
 
-            $flightObject->flightNumber = $td[0]->nodeValue;
-            $flightObject->airport = $td[1]->nodeValue;
-            $flightObject->status = $td[3]->nodeValue;
+            if (isset($td[1]))
+                $flightObject->flightNumber = $td[1]->nodeValue;
+            if (isset($td[2]))
+                $flightObject->airport = $td[2]->nodeValue;
+            if (isset($td[4]))
+                $flightObject->status = $td[4]->nodeValue;
 
             $realTime = $td[3]->nodeValue;
             if ( $class == 'flight-today' ) {
