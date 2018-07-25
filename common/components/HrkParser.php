@@ -60,7 +60,7 @@ class HrkParser implements ScheduleParser
             if (isset($td[3]))
                 $flightObject->status = $td[3]->nodeValue;
 
-            $realTime = $td[3]->nodeValue;
+            $realTime = $td[2]->nodeValue;
             if ( $class == 'flight-today' ) {
                 $flightObject->rel_date = "today";
                 $realDate = date('Y-m-d');
@@ -79,7 +79,7 @@ class HrkParser implements ScheduleParser
             $flightObject->_source = 'HRK';
 
             if ($this->_extended_info) {
-                $flightInfoLink = $td[1]->firstChild->getAttribute('href');
+                $flightInfoLink = $td[0]->firstChild->getAttribute('href');
                 $flightInfo = $this->_loadFlightInfo($flightInfoLink);
                 $flightObject->schedule_time = $flightInfo['scheduleTime'];
             } else {
@@ -112,7 +112,7 @@ class HrkParser implements ScheduleParser
             if (isset($td[3]))
                 $flightObject->status = $td[3]->nodeValue;
 
-            $realTime = $td[3]->nodeValue;
+            $realTime = $td[2]->nodeValue;
             if ( $class == 'flight-today' ) {
                 $flightObject->rel_date = "today";
                 $realDate = date('Y-m-d');
@@ -131,7 +131,7 @@ class HrkParser implements ScheduleParser
             $flightObject->_source = 'HRK';
 
             if ($this->_extended_info) {
-                $flightInfoLink = $td[1]->firstChild->getAttribute('href');
+                $flightInfoLink = $td[0]->firstChild->getAttribute('href');
                 $flightInfo = $this->_loadFlightInfo($flightInfoLink);
                 $flightObject->schedule_time = $flightInfo['scheduleTime'];
             } else {
