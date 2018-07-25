@@ -139,7 +139,7 @@ class HrkParser implements ScheduleParser
 
             unset($flightObject);
         }
-        
+
         if (empty($this->_schedule_parse_result)) $this->_schedule_parse_result = $flights;
         else $this->_schedule_parse_result = array_merge($this->_schedule_parse_result, $flights);
     }
