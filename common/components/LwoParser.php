@@ -42,8 +42,8 @@ class LwoParser implements ScheduleParser
 
         foreach ($arrival as $day => $depFlights) {
             foreach ($depFlights as $flight) {
-                if (empty($flight["name_airline"]) || empty($flight['status_class']))
-                    continue;
+                //if (empty($flight["name_airline"]) || empty($flight['status_class']))
+                //    continue;
 
                 $flightObject = new FlightObject();
                 $flightObject->flightNumber = $flight['flight_num'];
@@ -79,8 +79,8 @@ class LwoParser implements ScheduleParser
 
         foreach ($departure as $day => $depFlights) {
             foreach ($depFlights as $flight) {
-                if (empty($flight["name_airline"]) || empty($flight['status_class']))
-                    continue;
+                //if (empty($flight["name_airline"]) || empty($flight['status_class']))
+                //    continue;
 
                 $flightObject = new FlightObject();
                 $flightObject->flightNumber = $flight['flight_num'];
