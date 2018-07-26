@@ -75,11 +75,9 @@ class OdsParser implements ScheduleParser
             {
                 if ($dayHint == "today") {
                     $flightObject->schedule_time = date('Y-m-d') . ' ' . $tdList[2]->nodeValue;
-                    $flightObject->rel_date = "today";
                 }
                 if ($dayHint == "yesterday") {
                     $flightObject->schedule_time = date('Y-m-d', strtotime('-1 day')) . ' ' . $tdList[2]->nodeValue;
-                    $flightObject->rel_date = "yesterday";
                 }
             }
             else
@@ -90,16 +88,12 @@ class OdsParser implements ScheduleParser
                 $date = str_replace(['(', ')'], '', $dateVal);
 
                 $flightObject->schedule_time = date('Y-m-d H:i', strtotime($date.' '.$time));
-                $flightObject->rel_date = "tomorrow";
             }
 
             if (!empty(trim($tdList[3]->nodeValue))) {
                 $flightObject->real_time = date('Y-m-d', strtotime($flightObject->schedule_time)) . ' ' . $tdList[3]->nodeValue;
-
                 if ( date('dmYHi', strtotime($flightObject->schedule_time)) == date('dmYHi', strtotime($flightObject->real_time)) )
-                {
                     $flightObject->real_time = false;
-                }
             }
 
             if (date('dmY', strtotime('-1 day')) == date('dmY', strtotime($flightObject->schedule_time)))
