@@ -94,17 +94,20 @@ class OdsParser implements ScheduleParser
             }
 
             if (!empty(trim($tdList[3]->nodeValue))) {
-                if ($dayHint == "today") {
-                    $flightObject->real_time = date('Y-m-d') . ' ' . $tdList[3]->nodeValue;
-                }
-                if ($dayHint == "yesterday") {
-                    $flightObject->real_time = date('Y-m-d', strtotime('-1 day')) . ' ' . $tdList[3]->nodeValue;
-                }
+                $flightObject->real_time = date('Y-m-d', strtotime($flightObject->schedule_time)) . ' ' . $tdList[3]->nodeValue;
+
                 if ( date('dmYHi', strtotime($flightObject->schedule_time)) == date('dmYHi', strtotime($flightObject->real_time)) )
                 {
                     $flightObject->real_time = false;
                 }
             }
+
+            if (date('dmY', strtotime('-1 day')) == date('dmY', strtotime($flightObject->schedule_time)))
+                $flightObject->rel_date = "yesterday";
+            if (date('dmY', strtotime('now')) == date('dmY', strtotime($flightObject->schedule_time)))
+                $flightObject->rel_date = "today";
+            if (date('dmY', strtotime('+1 day')) == date('dmY', strtotime($flightObject->schedule_time)))
+                $flightObject->rel_date = "tomorrow";
 
             $flightObject->_source = 'ODS';
 
