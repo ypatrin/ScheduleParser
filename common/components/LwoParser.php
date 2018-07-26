@@ -93,11 +93,11 @@ class LwoParser implements ScheduleParser
                 $flightObject->_source = 'LWO';
 
                 if ($day == 0) {
-                    $date = date('Y-m-d', strtotime('-1 day'));
+                    $date = date('Y-m-d');
                     $flightObject->rel_date = "today";
                 }
                 if ($day == 1) {
-                    $date = date('Y-m-d', strtotime('now'));
+                    $date = date('Y-m-d', strtotime('-1 day'));
                     $flightObject->rel_date = "yesterday";
                 }
                 if ($day == 2) {
