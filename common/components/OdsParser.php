@@ -12,24 +12,27 @@ namespace app\common\components;
 class OdsParser implements ScheduleParser
 {
     const SCHEDULE_PAGE_URL = 'http://www.odessa.aero/ru/iboard';
+    const SCHEDULE_PREV_DAY_PARAM = '?day=yesterday';
 
     private $_schedule_page_content = false;
     private $_schedule_parse_result = false;
 
     public function getSchedule()
     {
-        $this->_loadSchedulePage();
-        $this->_parseSchedulePage();
+        $this->_loadSchedulePage(self::SCHEDULE_PAGE_URL);
+        $this->_parseSchedulePage('today');
+        $this->_loadSchedulePage(self::SCHEDULE_PAGE_URL . self::SCHEDULE_PREV_DAY_PARAM);
+        $this->_parseSchedulePage('yesterday');
 
         return $this->_schedule_parse_result;
     }
 
-    protected function _loadSchedulePage()
+    protected function _loadSchedulePage($url)
     {
-        $this->_schedule_page_content = @file_get_contents(self::SCHEDULE_PAGE_URL);
+        $this->_schedule_page_content = @file_get_contents($url);
     }
 
-    protected function _parseSchedulePage()
+    protected function _parseSchedulePage($day)
     {
         $flights = [];
 
@@ -44,11 +47,11 @@ class OdsParser implements ScheduleParser
         $arrival = $nodes[0];
         $departure = $nodes[1];
 
-        $this->_buildResults($arrival, "arrival");
-        $this->_buildResults($departure, "departure");
+        $this->_buildResults($arrival, "arrival", $day);
+        $this->_buildResults($departure, "departure", $day);
     }
 
-    protected function _buildResults($results, $direction)
+    protected function _buildResults($results, $direction, $dayHint)
     {
         $tr = $results->getElementsByTagName('tr');
         for ($i = 1; $i < $tr->length; $i++)
@@ -70,8 +73,14 @@ class OdsParser implements ScheduleParser
 
             if ($tdList[2]->getElementsByTagName('div')->length == 0)
             {
-                $flightObject->schedule_time = date('Y-m-d') . ' ' . $tdList[2]->nodeValue;
-                $flightObject->rel_date = "today";
+                if ($dayHint == "today") {
+                    $flightObject->schedule_time = date('Y-m-d') . ' ' . $tdList[2]->nodeValue;
+                    $flightObject->rel_date = "today";
+                }
+                if ($dayHint == "yesterday") {
+                    $flightObject->schedule_time = date('Y-m-d', strtotime('-1 day')) . ' ' . $tdList[2]->nodeValue;
+                    $flightObject->rel_date = "yesterday";
+                }
             }
             else
             {
@@ -85,7 +94,12 @@ class OdsParser implements ScheduleParser
             }
 
             if (!empty(trim($tdList[3]->nodeValue))) {
-                $flightObject->real_time = date('Y-m-d') . ' ' . $tdList[3]->nodeValue;
+                if ($dayHint == "today") {
+                    $flightObject->real_time = date('Y-m-d') . ' ' . $tdList[3]->nodeValue;
+                }
+                if ($dayHint == "yesterday") {
+                    $flightObject->real_time = date('Y-m-d', strtotime('-1 day')) . ' ' . $tdList[3]->nodeValue;
+                }
                 if ( date('dmYHi', strtotime($flightObject->schedule_time)) == date('dmYHi', strtotime($flightObject->real_time)) )
                 {
                     $flightObject->real_time = false;
