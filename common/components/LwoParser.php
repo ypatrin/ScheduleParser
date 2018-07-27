@@ -127,6 +127,7 @@ class LwoParser implements ScheduleParser
             case "BOARDING": return FlightObject::SCHEDULE_STATUS_СС; break;
             case "CHECK-IN": return FlightObject::SCHEDULE_STATUS_CK; break;
             case "EXPECTED": return FlightObject::SCHEDULE_STATUS_ON; break;
+            case "CANCELLED": return FlightObject::SCHEDULE_STATUS_CX; break;
 
             default: return strtoupper($status); break;
         }
