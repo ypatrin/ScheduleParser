@@ -44,8 +44,6 @@ class SiteController extends Controller
                 return strtotime($a->schedule_time) - strtotime($b->schedule_time);
             });
 
-            //var_dump($schedule); exit;
-
             Yii::$app->cache->set("schedule", $schedule, 60 * 10);
         }
         return $this->render('index', [

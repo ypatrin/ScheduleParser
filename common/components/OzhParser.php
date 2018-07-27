@@ -55,9 +55,15 @@ class OzhParser implements ScheduleParser
             $flightObject->airport = str_replace('Zaporizhzhya', '', $destiny);
             $flightObject->airport = str_replace('―', '', $flightObject->airport);
             $flightObject->airport = trim($flightObject->airport);
-            $flightObject->status = $status;
+            $flightObject->status = preg_replace("/  +/"," ",$status);
             $flightObject->schedule_time = date('Y-m-d') . ' ' . $time;
             $flightObject->carrier = $airline;
+
+            if ( $flightObject->flightNumber{2} != ' ' ) {
+                $carrier = substr($flightObject->flightNumber, 0, 3);
+                $num = substr($flightObject->flightNumber, 3, strlen($flightObject->flightNumber));
+                $flightObject->flightNumber = $carrier.' '.$num;
+            }
 
             $flightObject->rel_date = "today";
             $flightObject->direction = "departure";
@@ -84,9 +90,15 @@ class OzhParser implements ScheduleParser
             $flightObject->airport = str_replace('―', '', $flightObject->airport);
             $flightObject->airport = trim($flightObject->airport);
 
-            $flightObject->status = $status;
+            $flightObject->status = preg_replace("/  +/"," ",$status);
             $flightObject->schedule_time = date('Y-m-d') . ' ' . $time;
             $flightObject->carrier = $airline;
+
+            if ( $flightObject->flightNumber{2} != ' ' ) {
+                $carrier = substr($flightObject->flightNumber, 0, 3);
+                $num = substr($flightObject->flightNumber, 3, strlen($flightObject->flightNumber));
+                $flightObject->flightNumber = $carrier.' '.$num;
+            }
 
             $flightObject->rel_date = "today";
             $flightObject->direction = "arrival";
