@@ -46,6 +46,7 @@ class SiteController extends Controller
 
             Yii::$app->cache->set("schedule", $schedule, 60 * 10);
         }
+
         return $this->render('index', [
             'schedule' => $schedule,
             'parserList' => $parserList

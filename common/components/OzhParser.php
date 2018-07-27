@@ -24,7 +24,7 @@ class OzhParser implements ScheduleParser
     public function getSchedule()
     {
         $this->_parseSchedule();
-        return $this->_schedule_parse_result;
+        return array_values($this->_schedule_parse_result);
     }
 
     protected function _parseSchedule()
