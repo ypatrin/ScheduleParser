@@ -20,10 +20,10 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $parserList = [
-            'Hrk', 'Kbp', 'Iev', 'Lwo', 'Ods'
+            'Ozh', //'Hrk', 'Kbp', 'Iev', 'Lwo', 'Ods'
         ];
 
-        $schedule = Yii::$app->cache->get("schedule");
+        $schedule = false; //Yii::$app->cache->get("schedule");
 
         if ($schedule === false) {
             $schedule = [];
