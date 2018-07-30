@@ -52,6 +52,7 @@ if (isset($_GET['source']))
             <th scope="col">#</th>
             <th scope="col">Источник</th>
             <th scope="col">Направление</th>
+            <th scope="col">А/К</th>
             <th scope="col">Рейс</th>
             <th scope="col">Время</th>
             <th scope="col">Перевозчик</th>
@@ -72,6 +73,7 @@ if (isset($_GET['source']))
                     <td scope="col"><?= $num ?></td>
                     <td><?= $flight->_source ?></td>
                     <td><?= $flight->airport ?></td>
+                    <td><?= $flight->flightCarrier ?></td>
                     <td><?= $flight->flightNumber ?></td>
                     <td>
                         <?php if (empty($flight->real_time)): ?>

@@ -43,7 +43,12 @@ class FlightObject
     const SCHEDULE_STATUS_DL = 'delayed';
 
     /**
-     * Flight number. Ex. AZ 123
+     * Flight carrier ex. KUP
+     * @var string
+     */
+    public $flightCarrier;
+    /**
+     * Flight number. Ex. 123
      * @var string
      */
     public $flightNumber;

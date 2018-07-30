@@ -23,7 +23,7 @@ class SiteController extends Controller
             'Ozh', 'Hrk', 'Kbp', 'Iev', 'Lwo', 'Ods'
         ];
 
-        $schedule = Yii::$app->cache->get("schedule");
+        $schedule = false; //Yii::$app->cache->get("schedule");
 
         if ($schedule === false) {
             $schedule = [];
